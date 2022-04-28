@@ -8,20 +8,23 @@ import androidx.room.RoomDatabase;
 
 import com.aek.notes.model.ModelNote;
 
-@Database(entities = {ModelNote.class}, version = 1)
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+@Database(entities = {ModelNote.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DaoNote daoNote();
 
     private static AppDatabase instance;
 
-    private AppDatabase() {
+    protected AppDatabase() {
     }
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null)
-            instance = Room.databaseBuilder(context, AppDatabase.class, "room_db")
-                    .allowMainThreadQueries()
-                    .build();
+                instance = Room.databaseBuilder(context, AppDatabase.class, "room_db")
+                        .allowMainThreadQueries()
+                        .build();
 
         return instance;
     }

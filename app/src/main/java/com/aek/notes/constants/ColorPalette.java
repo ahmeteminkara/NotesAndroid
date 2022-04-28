@@ -15,4 +15,5 @@ public class ColorPalette {
     public static final List<String> COLOR_LIST = Arrays.asList(RED, YELLOW, GREEN, BLUE, PURPLE, PINK);
 
 
+    public static final String TRANSPARENT = "#00000075";
 }

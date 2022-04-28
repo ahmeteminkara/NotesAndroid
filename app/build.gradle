@@ -11,8 +11,22 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        archivesBaseName = "notes_" + versionName + "_" + versionCode
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/developer/Desktop/Ahmet/StoreFiles/NotesApp_ahmet009497.jks')
+            storePassword "009497"
+            keyAlias "ahmet"
+            keyPassword "009497"
+
+            // Optional, specify signing versions used
+            // v1SigningEnabled true
+            // v2SigningEnabled true
+        }
     }
 
     buildTypes {
@@ -22,8 +36,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 }
 

@@ -26,7 +26,7 @@ public interface DaoNote {
     int deleteWithId(int[] noteIds);
 
     @Insert
-    int insertAll(ModelNote... notes);
+    void insertAll(ModelNote... notes);
 
     @Update
     int update(ModelNote note);

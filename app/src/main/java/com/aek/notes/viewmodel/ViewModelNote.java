@@ -22,4 +22,6 @@ public class ViewModelNote extends ViewModel {
 
     final MutableLiveData<List<Integer>> mutableLiveDataSelectedNoteIDs = new MutableLiveData<>();
 
+
+
 }
