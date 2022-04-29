@@ -20,11 +20,23 @@ public class ColorPalette extends SuperColorPalette {
         void onColorSelected(String color);
     }
 
+    @Override
+    protected String setDefaultColor() {
+        return "#00ff00";
+    }
+
+    @Override
+    public String setDefaultColor(String color) {
+        setForegroundColor(color);
+        return color;
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void setColorList(List<String> colorList) {
         super.colors = colorList;
-        if (colorAdapter != null) colorAdapter.notifyDataSetChanged();
+        if (colorAdapter != null)
+            colorAdapter.addColorList(colorList);
     }
 
     @Override

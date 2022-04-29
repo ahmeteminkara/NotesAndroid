@@ -1,7 +1,6 @@
 package com.aek.notes.view;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import com.aek.notes.constants.AppConstants;
 import com.aek.notes.databinding.ActivityAddNoteBinding;
 import com.aek.notes.view.fragment.NewNoteFormFragment;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
-import com.google.android.material.color.MaterialColors;
 import com.google.android.material.transition.platform.MaterialArcMotion;
 import com.google.android.material.transition.platform.MaterialContainerTransform;
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
@@ -39,6 +37,7 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         actionBarCustomising();
+
         showFormFragment();
 
         ViewModelNoteForm.getInstance().liveDataModelForm.observe(this, modelNoteForm -> {
@@ -57,12 +56,15 @@ public class AddNoteActivity extends AppCompatActivity {
 
 
     private void actionBarCustomising() {
+
+        setSupportActionBar(binding.toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.defaultTransparentColor)));
         }
+
     }
 
     private View setBingingAndTransformParams() {
@@ -82,7 +84,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private void showFormFragment() {
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(binding.frameLayoutForm.getId(), NewNoteFormFragment.class, null)
+                .replace(binding.frameLayoutForm.getId(), NewNoteFormFragment.class, null)
                 .commit();
 
     }
@@ -93,9 +95,10 @@ public class AddNoteActivity extends AppCompatActivity {
                 .setDuration(400)
                 .setInterpolator(new LinearInterpolator())
                 .setPathMotion(new MaterialArcMotion());
-        transform.setAllContainerColors(MaterialColors.getColor(
-                findViewById(android.R.id.content),
-                com.google.android.material.R.attr.colorSurface));
+        transform.setAllContainerColors(
+                //MaterialColors.getColor(findViewById(android.R.id.content),com.google.android.material.R.attr.colorSurface),
+                Color.TRANSPARENT
+        );
 
         return transform;
     }

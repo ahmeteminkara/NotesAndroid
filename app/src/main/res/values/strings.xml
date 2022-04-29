@@ -4,4 +4,6 @@
     <string name="addNewNote">Tap to add new note</string>
     <string name="selectColor">Select Color</string>
     <string name="close_word">Close</string>
+    <string name="note_title">Enter a title</string>
+    <string name="note_description">Enter a description</string>
 </resources>

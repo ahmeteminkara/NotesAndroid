@@ -35,27 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setExitSharedElementCallback(new MaterialContainerTransformSharedElementCallback());
         getWindow().setSharedElementsUseOverlay(false);
 
-        binding.cp.setColorList(ColorPaletteConstants.COLOR_LIST);
-        binding.cp.setBackgroundColor("#000000");
-        binding.cp.setForegroundColor(ColorPaletteConstants.RED);
-        binding.cp.setListener(new ColorPalette.ColorPaletteListener() {
-            @Override
-            public void onChangeVisiblePalette(boolean visible) {
-                ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(visible);
-            }
-
-            @Override
-            public void onColorSelected(String color) {
-                ViewModelNoteForm.getInstance().setBgColor(color);
-                binding.cp.setForegroundColor(ColorPaletteConstants.GREEN);
-            }
-        });
-
-        ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.observe(this, isOpen -> {
-            if (!isOpen)
-                binding.cp.hidePalette();
-
-        });
 
         binding.fabAddNote.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
@@ -94,22 +73,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onBackPressed() {
-        boolean status = ViewModelNoteForm.getInstance().getColorPaletteStatus();
-        if (status) {
-            ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(false);
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

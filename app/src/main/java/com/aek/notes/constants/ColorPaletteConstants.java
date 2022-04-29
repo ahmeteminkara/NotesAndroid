@@ -5,15 +5,17 @@ import java.util.List;
 
 public class ColorPaletteConstants {
 
-    public static final String RED = "#FFA8A8";
-    public static final String YELLOW = "#FBFFA8";
-    public static final String GREEN = "#B4FFA8";
-    public static final String BLUE = "#A8C0FF";
-    public static final String PURPLE = "#D1A8FF";
-    public static final String PINK = "#FFA8FB";
+    public static final String WHITE = "#FeFeFe";
+    public static final String GRAY = "#AaAaAa";
+    public static final String RED = "#FFCCCC";
+    public static final String YELLOW = "#FFFFBF";
+    public static final String GREEN = "#D6FFCC";
+    public static final String BLUE = "#CCDAFF";
+    public static final String PURPLE = "#E4CCFF";
+    public static final String PINK = "#FFCBFD";
 
-    public static final List<String> COLOR_LIST = Arrays.asList(RED, YELLOW, GREEN, BLUE, PURPLE, PINK);
+    public static final List<String> COLOR_LIST = Arrays.asList(WHITE, GRAY, RED, YELLOW, GREEN, BLUE, PURPLE, PINK);
 
 
-    public static final String TRANSPARENT = "#00000075";
+    public static final String TRANSPARENT = "#00000000";// RGBa -> 000000 75
 }

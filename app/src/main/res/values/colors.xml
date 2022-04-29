@@ -9,7 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
 
-
-    <color name="defaultTransparentColor">#70000000</color>
+    <!--
+    -->
+    <color name="defaultTransparentColor">#00000000</color>
     <color name="defaultNoteColor">#FBFFA8</color>
 </resources>
