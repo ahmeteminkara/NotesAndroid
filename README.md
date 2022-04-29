@@ -11,7 +11,7 @@
 
 ### Aşamalar
 - [x] İlk commit
-- [/] Kaydetme ekranı
+- [ ] Kaydetme ekranı
 - [ ] Verileri Room'da saklama
 - [ ] Ana sayfa ekranı
 - [ ] UI geliştirme

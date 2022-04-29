@@ -3,7 +3,7 @@ package com.aek.notes.constants;
 import java.util.Arrays;
 import java.util.List;
 
-public class ColorPalette {
+public class ColorPaletteConstants {
 
     public static final String RED = "#FFA8A8";
     public static final String YELLOW = "#FBFFA8";

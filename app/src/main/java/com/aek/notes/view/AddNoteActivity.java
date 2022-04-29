@@ -12,8 +12,6 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import com.aek.notes.R;
 import com.aek.notes.constants.AppConstants;
@@ -104,7 +102,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (ViewModelNoteForm.getInstance().getColorPaletteStatus()){
+        boolean status = ViewModelNoteForm.getInstance().getColorPaletteStatus();
+        if (status) {
             ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(false);
             return;
         }

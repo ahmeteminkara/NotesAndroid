@@ -8,14 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.transition.TransitionManager;
 
 import com.aek.notes.R;
+import com.aek.notes.constants.ColorPaletteConstants;
 import com.aek.notes.databinding.FragmentNewNoteFormBinding;
+import com.aek.notes.view.customview.ColorPalette;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
-import com.google.android.material.color.MaterialColors;
-import com.google.android.material.transition.MaterialContainerTransform;
 
 public class NewNoteFormFragment extends Fragment {
 
@@ -35,63 +33,35 @@ public class NewNoteFormFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_note_form, container, false);
 
+        /*
         binding.fabColor.setOnClickListener(view -> ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(true));
+        */
         binding.fabSave.setOnClickListener(view -> save());
 
-        ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.observe(getViewLifecycleOwner(), isOpen -> {
-            if (isOpen)
-                colorPaletteOpen();
-            else
-                colorPaletteClose();
+        binding.colorPalette.setColorList(ColorPaletteConstants.COLOR_LIST);
+        binding.colorPalette.setListener(new ColorPalette.ColorPaletteListener() {
+            @Override
+            public void onChangeVisiblePalette(boolean visible) {
+                ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(visible);
+            }
 
+            @Override
+            public void onColorSelected(String color) {
+                ViewModelNoteForm.getInstance().setBgColor(color);
+                binding.colorPalette.setForegroundColor(color);
+            }
         });
 
+        ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.observe(getViewLifecycleOwner(), isOpen -> {
+            if (!isOpen)
+                binding.colorPalette.hidePalette();
+
+        });
         return binding.getRoot();
     }
 
 
-    private void colorPaletteOpen() {
-        MaterialContainerTransform transition = buildContainerTransformation();
-
-        transition.setStartView(binding.fabColor);
-        transition.setEndView(binding.card);
-        transition.addTarget(binding.card);
-
-        TransitionManager.beginDelayedTransition(binding.formLayout, transition);
-        binding.card.setVisibility(View.VISIBLE);
-        binding.fabColor.setVisibility(View.INVISIBLE);
-        //binding.fabScrim.visibility = View.VISIBLE
-
-    }
-
-
-    private void colorPaletteClose() {
-        MaterialContainerTransform transition = buildContainerTransformation();
-
-        transition.setStartView(binding.card);
-        transition.setEndView(binding.fabColor);
-        transition.addTarget(binding.fabColor);
-
-        TransitionManager.beginDelayedTransition(binding.formLayout, transition);
-        binding.card.setVisibility(View.INVISIBLE);
-        binding.fabColor.setVisibility(View.VISIBLE);
-        //binding.fabScrim.visibility = View.VISIBLE
-
-    }
-
-
-    private MaterialContainerTransform buildContainerTransformation() {
-        MaterialContainerTransform transition = new MaterialContainerTransform();
-        transition.setFadeMode(MaterialContainerTransform.FADE_MODE_IN);
-        transition.setContainerColor(MaterialColors.getColor(binding.getRoot(), com.google.android.material.R.attr.colorSecondary));
-        transition.setScrimColor(Color.TRANSPARENT);
-        transition.setDuration(300);
-        transition.setInterpolator(new FastOutSlowInInterpolator());
-        return transition;
-    }
-
     private void save() {
     }
-
 
 }
