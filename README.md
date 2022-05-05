@@ -11,8 +11,8 @@
 
 ### Aşamalar
 - [x] İlk commit
-- [ ] Kaydetme ekranı
-- [ ] Verileri Room'da saklama
+- [x] Kaydetme ekranı
+- [X] Verileri Room'da saklama
 - [ ] Ana sayfa ekranı
 - [ ] UI geliştirme
 - [ ] Play'a Yükleme
