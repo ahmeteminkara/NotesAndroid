@@ -6,4 +6,5 @@ public class AppConstants {
 
     public static final String DEFAULT_TRANSPARENT_COLOR = ColorPaletteConstants.TRANSPARENT;
     public static final String DEFAULT_NOTE_COLOR = ColorPaletteConstants.YELLOW;
+
 }

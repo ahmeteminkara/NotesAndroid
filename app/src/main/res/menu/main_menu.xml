@@ -7,6 +7,25 @@
         android:icon="@drawable/ic_round_search"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always|collapseActionView" />
+
+
+    <item
+        android:id="@+id/action_deselect"
+        android:icon="@drawable/ic_deselect"
+        android:title="Unselect"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_all_select"
+        android:icon="@drawable/ic_select_all"
+        android:title="Select All"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_selected_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="Detele"
+        app:showAsAction="always" />
 
 </menu>

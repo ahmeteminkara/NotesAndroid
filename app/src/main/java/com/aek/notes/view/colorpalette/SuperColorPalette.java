@@ -84,7 +84,7 @@ public abstract class SuperColorPalette extends FrameLayout {
     private void initComponent(Context context) {
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.view_color_palette, this);
+        inflater.inflate(R.layout.color_palette_view, this);
 
         initView();
         initRecycler();

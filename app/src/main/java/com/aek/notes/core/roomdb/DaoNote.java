@@ -14,10 +14,10 @@ import java.util.List;
 @Dao
 public interface DaoNote {
 
-    @Query("SELECT * FROM notes")
+    @Query("SELECT * FROM notes ORDER BY id DESC")
     List<ModelNote> getAll();
 
-    @Query("SELECT * FROM notes WHERE title LIKE :word OR content LIKE :word")
+    @Query("SELECT * FROM notes WHERE title LIKE :word OR content LIKE :word ORDER BY id DESC")
     List<ModelNote> findByWord(String word);
 
     @Query("SELECT * FROM notes WHERE id = :noteIds")

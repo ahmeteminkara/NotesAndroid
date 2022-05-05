@@ -54,6 +54,10 @@ public class ViewModelNoteForm extends ViewModel {
             modelNote.setColorHex(color);
     }
 
+    public void setBgColorDefault() {
+        setBgColor(DEFAULT_NOTE_COLOR);
+    }
+
     public boolean addNote(Context context) {
         modelNote.createdTime = new Date().getTime();
         try {

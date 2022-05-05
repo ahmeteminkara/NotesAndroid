@@ -11,7 +11,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
+
 public class DateUtils {
+
+    /**
+     * yyyy.MM.dd HH:mm:ss -> 2001.07.04 12:08:56
+     */
+    private DateUtils() {
+    }
 
     /**
      * For today
