@@ -11,9 +11,11 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.aek.notes.R;
-import com.aek.notes.constants.AppConstants;
+import com.aek.notes.core.constants.AppConstants;
 import com.aek.notes.databinding.ActivityAddNoteBinding;
 import com.aek.notes.view.fragment.NewNoteFormFragment;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
@@ -24,6 +26,7 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 public class AddNoteActivity extends AppCompatActivity {
 
     ActivityAddNoteBinding binding;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +40,24 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         actionBarCustomising();
-
         showFormFragment();
 
-        ViewModelNoteForm.getInstance().liveDataModelForm.observe(this, modelNoteForm -> {
-            binding.activityAddNote.setBackgroundColor(Color.parseColor(modelNoteForm.colorHex));
+        ViewModelNoteForm.getInstance().liveDataColor.observe(this, colorHex -> {
+            binding.activityAddNote.setBackgroundColor(Color.parseColor(colorHex));
         });
+    }
+
+    @Override
+    protected void onStop() {
+
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof NewNoteFormFragment) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
 
 
+        super.onStop();
     }
 
     private void setWindowParams() {
@@ -54,9 +67,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     }
 
-
     private void actionBarCustomising() {
-
         setSupportActionBar(binding.toolbar);
 
         if (getSupportActionBar() != null) {
@@ -82,9 +93,10 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void showFormFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(binding.frameLayoutForm.getId(), NewNoteFormFragment.class, null)
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        NewNoteFormFragment fragment = new NewNoteFormFragment(this::onBackPressed);
+        fragmentTransaction.setReorderingAllowed(true)
+                .replace(binding.frameLayoutForm.getId(), fragment)
                 .commit();
 
     }

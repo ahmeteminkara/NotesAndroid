@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
-      "outputFile": "notes_1.0_1-release.apk"
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "outputFile": "notes_1.0.1_2-release.apk"
     }
   ],
   "elementType": "File"

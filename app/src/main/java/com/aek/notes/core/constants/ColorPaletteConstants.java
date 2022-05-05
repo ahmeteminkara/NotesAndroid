@@ -1,4 +1,4 @@
-package com.aek.notes.constants;
+package com.aek.notes.core.constants;
 
 import java.util.Arrays;
 import java.util.List;

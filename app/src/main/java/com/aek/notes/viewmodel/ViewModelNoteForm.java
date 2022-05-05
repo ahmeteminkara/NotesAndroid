@@ -1,16 +1,23 @@
 package com.aek.notes.viewmodel;
 
-import static com.aek.notes.constants.AppConstants.DEFAULT_NOTE_COLOR;
+
+import static com.aek.notes.core.constants.AppConstants.DEFAULT_NOTE_COLOR;
+
+import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.aek.notes.model.ModelNoteForm;
+import com.aek.notes.core.roomdb.AppDatabase;
+import com.aek.notes.model.ModelNote;
+
+import java.util.Date;
 
 public class ViewModelNoteForm extends ViewModel {
 
     private ViewModelNoteForm() {
-        liveDataModelForm.setValue(new ModelNoteForm().setColorHex(DEFAULT_NOTE_COLOR));
+        modelNote = new ModelNote().setColorHex(DEFAULT_NOTE_COLOR).setTitle("").setContent("");
     }
 
     private static ViewModelNoteForm instance;
@@ -27,23 +34,36 @@ public class ViewModelNoteForm extends ViewModel {
     }
 
     public final MutableLiveData<Boolean> liveDataColorPaletteStatus = new MutableLiveData<>();
+    public final MutableLiveData<String> liveDataColor = new MutableLiveData<>();
 
-    public final MutableLiveData<ModelNoteForm> liveDataModelForm = new MutableLiveData<>();
+    public ModelNote modelNote;
 
     public void setTitle(String title) {
-        if (liveDataModelForm.getValue() != null)
-            liveDataModelForm.setValue(liveDataModelForm.getValue().setTitle(title));
+        if (modelNote != null)
+            modelNote.setTitle(title);
     }
 
     public void setContent(String content) {
-        if (liveDataModelForm.getValue() != null)
-            liveDataModelForm.setValue(liveDataModelForm.getValue().setTitle(content));
+        if (modelNote != null)
+            modelNote.setContent(content);
     }
 
     public void setBgColor(String color) {
-        if (liveDataModelForm.getValue() != null)
-            liveDataModelForm.setValue(liveDataModelForm.getValue().setColorHex(color));
+        liveDataColor.setValue(color);
+        if (modelNote != null)
+            modelNote.setColorHex(color);
     }
 
+    public boolean addNote(Context context) {
+        modelNote.createdTime = new Date().getTime();
+        try {
+            AppDatabase.getInstance(context).daoNote().insertReplace(modelNote);
+            return true;
+        } catch (Exception exception) {
+            Log.e("addNote", exception.toString());
+            return false;
+        }
+
+    }
 
 }

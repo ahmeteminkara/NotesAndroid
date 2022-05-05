@@ -35,10 +35,14 @@
                 app:counterMaxLength="40">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputTitle"
+                    style="@style/FormFieldAddNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/FormFieldAddNote"
-                    android:hint="@string/note_title" />
+                    android:hint="@string/note_title"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@id/textInputContent"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,16 +52,16 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:maxLength="300"
-
                 app:counterEnabled="true"
                 app:counterMaxLength="300">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputContent"
+                    style="@style/FormFieldAddNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    style="@style/FormFieldAddNote"
                     android:hint="@string/note_description"
+                    android:imeOptions="actionDone"
                     android:maxLines="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -65,7 +69,7 @@
         </LinearLayout>
 
 
-        <com.aek.notes.view.customview.ColorPalette
+        <com.aek.notes.view.colorpalette.ColorPalette
             android:id="@+id/colorPalette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

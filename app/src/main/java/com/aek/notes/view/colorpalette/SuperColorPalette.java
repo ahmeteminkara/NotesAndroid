@@ -1,4 +1,4 @@
-package com.aek.notes.view.customview;
+package com.aek.notes.view.colorpalette;
 
 import android.content.Context;
 import android.graphics.Color;

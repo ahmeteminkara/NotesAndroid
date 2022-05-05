@@ -1,4 +1,4 @@
-package com.aek.notes.constants;
+package com.aek.notes.core.constants;
 
 public class AppConstants {
 

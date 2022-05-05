@@ -1,4 +1,4 @@
-package com.aek.notes.view.customview;
+package com.aek.notes.view.colorpalette;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

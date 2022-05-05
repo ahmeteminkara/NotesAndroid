@@ -24,6 +24,21 @@ public class ModelNote {
     @ColumnInfo
     public String colorHex;
 
-    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
-    public String createdTime;
+    @ColumnInfo
+    public long createdTime;
+
+    public ModelNote setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ModelNote setContent(String content) {
+        this.content = content;
+        return this;
+    }
+
+    public ModelNote setColorHex(String colorHex) {
+        this.colorHex = colorHex;
+        return this;
+    }
 }

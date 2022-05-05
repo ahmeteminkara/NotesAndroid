@@ -2,23 +2,18 @@ package com.aek.notes.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import com.aek.notes.R;
-import com.aek.notes.constants.AppConstants;
-import com.aek.notes.constants.ColorPaletteConstants;
+import com.aek.notes.core.constants.AppConstants;
 import com.aek.notes.databinding.ActivityMainBinding;
-import com.aek.notes.view.customview.ColorPalette;
-import com.aek.notes.viewmodel.ViewModelNoteForm;
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.aek.notes.core.room;
+package com.aek.notes.core.roomdb;
 
 import android.content.Context;
 
@@ -7,9 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.aek.notes.model.ModelNote;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Database(entities = {ModelNote.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -22,7 +19,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null)
-                instance = Room.databaseBuilder(context, AppDatabase.class, "room_db")
+                instance = Room.databaseBuilder(context, AppDatabase.class, "aek_notes.db")
                         .allowMainThreadQueries()
                         .build();
 
