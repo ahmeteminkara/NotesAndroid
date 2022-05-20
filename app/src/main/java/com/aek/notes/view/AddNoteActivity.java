@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,6 @@ import com.aek.notes.databinding.ActivityAddNoteBinding;
 import com.aek.notes.view.fragment.NewNoteFormFragment;
 import com.aek.notes.viewmodel.ViewModelNote;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
-import com.google.android.material.transition.platform.MaterialArcMotion;
 import com.google.android.material.transition.platform.MaterialContainerTransform;
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 
@@ -33,6 +32,7 @@ public class AddNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setWindowParams();
 
+
         // binding & transform
         View view = setBingingAndTransformParams();
 
@@ -41,7 +41,8 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         actionBarCustomising();
-        showFormFragment();
+        if (savedInstanceState == null)
+            showFormFragment();
 
         ViewModelNoteForm.getInstance().liveDataColor.observe(this, colorHex -> {
             binding.activityAddNote.setBackgroundColor(Color.parseColor(colorHex));
@@ -80,17 +81,18 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private View setBingingAndTransformParams() {
+
         final View view = getLayoutInflater().inflate(R.layout.activity_add_note, null, false);
         binding = ActivityAddNoteBinding.bind(view);
-        binding.activityAddNote.setTransitionName(AppConstants.FAB_BUTTON_TO_ADD_NOTE_TRANSITION_NAME);
 
         setEnterSharedElementCallback(new MaterialContainerTransformSharedElementCallback());
         getWindow().setSharedElementEnterTransition(buildTransform(true));
         getWindow().setSharedElementReturnTransition(buildTransform(false));
+
+        binding.activityAddNote.setTransitionName(AppConstants.FAB_BUTTON_TO_ADD_NOTE_TRANSITION_NAME);
         binding.activityAddNote.setBackgroundColor(Color.parseColor(AppConstants.DEFAULT_NOTE_COLOR));
 
         return binding.getRoot();
-
     }
 
     private void showFormFragment() {
@@ -106,8 +108,7 @@ public class AddNoteActivity extends AppCompatActivity {
         MaterialContainerTransform transform = new MaterialContainerTransform(this, entering);
         transform.addTarget(binding.activityAddNote)
                 .setDuration(400)
-                .setInterpolator(new LinearInterpolator())
-                .setPathMotion(new MaterialArcMotion());
+                .setInterpolator(new DecelerateInterpolator());
         transform.setAllContainerColors(
                 //MaterialColors.getColor(findViewById(android.R.id.content),com.google.android.material.R.attr.colorSurface),
                 Color.TRANSPARENT
@@ -131,6 +132,7 @@ public class AddNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            supportFinishAfterTransition();
             return true;
         }
         return super.onOptionsItemSelected(item);

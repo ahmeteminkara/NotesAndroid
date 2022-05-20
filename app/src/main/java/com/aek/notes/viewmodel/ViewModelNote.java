@@ -29,7 +29,7 @@ public class ViewModelNote extends ViewModel {
     public final MutableLiveData<ModelNote> liveUpdateHandler = new MutableLiveData<>();
     public final MutableLiveData<Integer> liveDataNotes = new MutableLiveData<>();
     public final MutableLiveData<Integer> liveDataNotesSelected = new MutableLiveData<>();
-    public final MutableLiveData<String> liveDataSearchWord = new MutableLiveData<>();
+    public final MutableLiveData<String> liveDataSearchWord = new MutableLiveData<>("");
 
 
     public boolean isSelect(ModelNote note) {

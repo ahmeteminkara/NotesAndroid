@@ -1,6 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Launcher theme. -->
+    <style name="SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
     <!-- Base application theme. -->
     <style name="Theme.Notes" parent="Theme.MaterialComponents.Light.DarkActionBar">
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

@@ -43,15 +43,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding.fabAddNote.setOnClickListener(view -> {
-            ViewModelNoteForm.getInstance().setBgColorDefault();
             Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
                     MainActivity.this, binding.fabAddNote,
-                    AppConstants.FAB_BUTTON_TO_ADD_NOTE_TRANSITION_NAME).toBundle();
-            startActivity(intent, bundle);
+                    AppConstants.FAB_BUTTON_TO_ADD_NOTE_TRANSITION_NAME);
+            startActivity(intent, activityOptions.toBundle());
+            ViewModelNoteForm.getInstance().setBgColorDefault();
         });
 
-        showFormFragment();
+        if (savedInstanceState == null)
+            showFormFragment();
 
 
     }
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Type here to search");
         searchView.setOnCloseListener(() -> {
-            ViewModelNote.getInstance().liveDataSearchWord.setValue(null);
+            ViewModelNote.getInstance().liveDataSearchWord.setValue("");
             return false;
         });
 
@@ -132,5 +133,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (!ViewModelNote.getInstance().liveDataSearchWord.getValue().isEmpty()) {
+            ViewModelNote.getInstance().liveDataSearchWord.setValue("");
+            return;
+        }
+        super.onBackPressed();
+    }
 }
