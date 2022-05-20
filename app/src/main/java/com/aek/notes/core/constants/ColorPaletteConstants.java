@@ -6,7 +6,7 @@ import java.util.List;
 public class ColorPaletteConstants {
 
     public static final String WHITE = "#FeFeFe";
-    public static final String GRAY = "#AaAaAa";
+    public static final String GRAY = "#EdEdEd";
     public static final String RED = "#FFCCCC";
     public static final String YELLOW = "#FFFFBF";
     public static final String GREEN = "#D6FFCC";

@@ -48,4 +48,15 @@ public class ModelNote {
         this.colorHex = colorHex;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "ModelNote{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", colorHex='" + colorHex + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
+    }
 }

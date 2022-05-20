@@ -13,7 +13,7 @@
 - [x] İlk commit
 - [x] Kaydetme ekranı
 - [X] Verileri Room'da saklama
-- [ ] Ana sayfa ekranı
+- [X] Ana sayfa ekranı
 - [ ] UI geliştirme
 - [ ] Play'a Yükleme
 - [ ] Widget oluşturma

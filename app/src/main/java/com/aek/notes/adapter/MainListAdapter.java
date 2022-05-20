@@ -1,11 +1,10 @@
 package com.aek.notes.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,19 +14,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aek.notes.R;
 import com.aek.notes.core.util.DateUtils;
 import com.aek.notes.model.ModelNote;
+import com.aek.notes.viewmodel.ViewModelNote;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
-    private Context context;
-    private List<ModelNote> list;
-    private OnTouchListener onTouchListener;
+    private final List<ModelNote> noteList;
+    private final OnTouchListener onTouchListener;
 
-    public MainListAdapter(Context context, List<ModelNote> list, OnTouchListener onTouchListener) {
-        this.context = context;
-        this.list = list;
+    @NonNull
+    private static <K extends Comparable, V> Map<K, V> sortByKeys(Map<K, V> map) {
+        Map<K, V> treeMap = new TreeMap<>((a, b) -> {
+            return b.compareTo(a);
+        });
+        treeMap.putAll(map);
+        return treeMap;
+    }
+
+    public MainListAdapter(Map<Integer, ModelNote> noteMap, OnTouchListener onTouchListener) {
+        this.noteList = new ArrayList<>();
         this.onTouchListener = onTouchListener;
+
+        noteMap = sortByKeys(noteMap);
+        noteList.addAll(noteMap.values());
+
     }
 
     @NonNull
@@ -40,48 +54,64 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Log.e(MainListAdapter.class.getSimpleName(), "init " + list.get(position).title);
+        holder.title.setText(noteList.get(position).title);
+        holder.content.setText(noteList.get(position).content);
+        holder.date.setText(DateUtils.dateToString("MMM d yyyy, HH:mm:ss", new Date(noteList.get(position).createdTime)));
 
-        holder.title.setText(list.get(position).title);
-        holder.content.setText(list.get(position).content);
-        holder.date.setText(DateUtils.dateToString("MMM d yyyy, HH:mm:ss", new Date(list.get(position).createdTime)));
+        holder.imgCheck.setVisibility(
+                ViewModelNote.getInstance().isSelect(noteList.get(position))
+                        ? View.VISIBLE : View.INVISIBLE
+        );
 
-        holder.cardItem.setCardBackgroundColor(Color.parseColor(list.get(position).colorHex));
+        holder.cardItem.setCardBackgroundColor(Color.parseColor(noteList.get(position).colorHex));
         holder.cardItem.setLongClickable(true);
         holder.cardItem.setOnLongClickListener(view -> {
-            onTouchListener.onLongTouch(list.get(position));
+            onTouchListener.onLongTouch(noteList.get(position));
             return true;
         });
-        holder.cardItem.setOnClickListener(view -> onTouchListener.onTouch(list.get(position)));
+        holder.cardItem.setOnClickListener(view -> onTouchListener.onTouch(noteList.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return noteList.size();
     }
 
-    public void setDataList(List<ModelNote> modelNotes) {
-        list.clear();
-        list.addAll(modelNotes);
+    public void setDataList(Map<Integer, ModelNote> noteMap) {
+        noteList.clear();
+        noteMap = sortByKeys(noteMap);
+        noteList.addAll(noteMap.values());
+    }
+
+    public int updateDataItem(ModelNote model) {
+        int index = noteList.indexOf(model);
+        noteList.set(index, model);
+        return index;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title, content, date;
         public CardView cardItem;
+        public ImageView imgCheck;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+
             cardItem = itemView.findViewById(R.id.cardItem);
             title = itemView.findViewById(R.id.tvTitle);
             content = itemView.findViewById(R.id.tvContent);
             date = itemView.findViewById(R.id.tvDate);
+            imgCheck = itemView.findViewById(R.id.imgCheck);
+
+            imgCheck.setVisibility(View.INVISIBLE);
         }
     }
 
-    public static interface OnTouchListener {
-        public void onTouch(ModelNote note);
+    public interface OnTouchListener {
+        void onTouch(ModelNote note);
 
-        public void onLongTouch(ModelNote note);
+        void onLongTouch(ModelNote note);
     }
 }
