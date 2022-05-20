@@ -22,7 +22,10 @@ import com.aek.notes.databinding.FragmentNoteListBinding;
 import com.aek.notes.model.ModelNote;
 import com.aek.notes.view.AddNoteActivity;
 import com.aek.notes.viewmodel.ViewModelNote;
-import com.google.gson.Gson;
+
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class NoteListFragment extends Fragment implements MainListAdapter.OnTouchListener {
 
@@ -64,8 +67,28 @@ public class NoteListFragment extends Fragment implements MainListAdapter.OnTouc
             }
         });
 
+        ViewModelNote.getInstance().liveDataSearchWord.observe(getViewLifecycleOwner(), searchKey -> {
+            if (adapter != null) {
+
+                Predicate<ModelNote> streamsPredicate = item -> item.title.contains(searchKey) || item.content.contains(searchKey);
+
+                if (searchKey == null || searchKey.isEmpty())
+                    adapter.setDataList(ViewModelNote.getInstance().mapData);
+                else
+                    adapter.setDataList(filterByValue(ViewModelNote.getInstance().mapData, streamsPredicate));
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
         return binding.getRoot();
+    }
+
+    public static <K, V> Map<K, V> filterByValue(Map<K, V> map, Predicate<V> predicate) {
+        return map.entrySet()
+                .stream()
+                .filter(x -> predicate.test(x.getValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private void initView() {
@@ -91,7 +114,7 @@ public class NoteListFragment extends Fragment implements MainListAdapter.OnTouc
 
         ViewModelNote.getInstance().updateFormData = note;
 
-                Intent intent = new Intent(getContext(), AddNoteActivity.class);
+        Intent intent = new Intent(getContext(), AddNoteActivity.class);
         Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
                 getActivity(), view,
                 AppConstants.FAB_BUTTON_TO_ADD_NOTE_TRANSITION_NAME)

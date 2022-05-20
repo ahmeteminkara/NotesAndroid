@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.aek.notes"
-        minSdk 23
+        minSdk 24
         targetSdk 32
         versionCode 3
         versionName "1.0.2"

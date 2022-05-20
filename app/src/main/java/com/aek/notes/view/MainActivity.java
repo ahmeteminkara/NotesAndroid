@@ -89,9 +89,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_selected_delete) {
-            if (!ViewModelNote.getInstance().deleteSelected(this)) {
-                AppUtils.showSnackBar(binding.frameLayoutMain, "Selected notes are not deleted");
-            }
+
+            AppUtils.showAlertDialog(this, "Delete notes?", () -> {
+                if (!ViewModelNote.getInstance().deleteSelected(MainActivity.this)) {
+                    AppUtils.showSnackBar(binding.frameLayoutMain, "Selected notes are not deleted");
+                }
+            }, null);
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -108,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Type here to search");
+        searchView.setOnCloseListener(() -> {
+            ViewModelNote.getInstance().liveDataSearchWord.setValue(null);
+            return false;
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -117,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                ViewModelNote.getInstance().liveDataSearchWord.setValue(newText);
                 return false;
             }
         });

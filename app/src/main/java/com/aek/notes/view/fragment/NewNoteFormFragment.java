@@ -147,19 +147,19 @@ public class NewNoteFormFragment extends Fragment {
         }
 
         if (ViewModelNote.getInstance().updateFormData == null) {
-            // güncelle
-            if (ViewModelNoteForm.getInstance().updateNote(getContext())) {
-                onCallback.run();
-            } else {
-                AppUtils.showSnackBar(binding.formLayout, "No note updated");
-            }
-
-        } else {
             // ekle
             if (ViewModelNoteForm.getInstance().addNote(getContext())) {
                 onCallback.run();
             } else {
                 AppUtils.showSnackBar(binding.formLayout, "No note added");
+            }
+
+        } else {
+            // güncelle
+            if (ViewModelNoteForm.getInstance().updateNote(getContext())) {
+                onCallback.run();
+            } else {
+                AppUtils.showSnackBar(binding.formLayout, "No note updated");
             }
         }
     }
