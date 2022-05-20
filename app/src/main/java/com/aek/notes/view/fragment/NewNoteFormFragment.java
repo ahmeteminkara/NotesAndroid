@@ -7,12 +7,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.core.util.Consumer;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -21,12 +19,13 @@ import com.aek.notes.core.constants.ColorPaletteConstants;
 import com.aek.notes.core.util.AppUtils;
 import com.aek.notes.databinding.FragmentNewNoteFormBinding;
 import com.aek.notes.view.colorpalette.ColorPalette;
+import com.aek.notes.viewmodel.ViewModelNote;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
 
 public class NewNoteFormFragment extends Fragment {
 
     private FragmentNewNoteFormBinding binding;
-private final Runnable onCallback;
+    private final Runnable onCallback;
 
     public NewNoteFormFragment(Runnable onCallback) {
         this.onCallback = onCallback;
@@ -59,11 +58,24 @@ private final Runnable onCallback;
         */
         binding.fabSave.setOnClickListener(view -> save());
 
+        if (ViewModelNote.getInstance().updateFormData != null) {
+
+            String color = ViewModelNote.getInstance().updateFormData.colorHex;
+            ViewModelNoteForm.getInstance().setBgColor(color);
+            binding.colorPalette.setForegroundColor(color);
+            binding.colorPalette.setDefaultColor(color);
+            binding.fabSave.setColorFilter(Color.parseColor(color));
+
+            binding.textInputTitle.setText(ViewModelNote.getInstance().updateFormData.title);
+            binding.textInputContent.setText(ViewModelNote.getInstance().updateFormData.content);
+            ViewModelNoteForm.getInstance().modelNote = ViewModelNote.getInstance().updateFormData;
+        } else {
+
+            binding.colorPalette.setDefaultColor(DEFAULT_NOTE_COLOR);
+        }
+        binding.colorPalette.setBackgroundColor("#000000");
 
         binding.colorPalette.setColorList(ColorPaletteConstants.COLOR_LIST);
-        binding.colorPalette.setBackgroundColor("#000000");
-        binding.colorPalette.setDefaultColor(DEFAULT_NOTE_COLOR);
-        binding.colorPalette.setForegroundColor(DEFAULT_NOTE_COLOR);
         binding.colorPalette.setListener(new ColorPalette.ColorPaletteListener() {
             @Override
             public void onChangeVisiblePalette(boolean visible) {
@@ -82,6 +94,11 @@ private final Runnable onCallback;
             }
         });
 
+        initTextEdit();
+    }
+
+    private void initTextEdit() {
+
         binding.textInputTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -98,7 +115,6 @@ private final Runnable onCallback;
                 ViewModelNoteForm.getInstance().setTitle(editable.toString());
             }
         });
-
         binding.textInputContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -115,6 +131,7 @@ private final Runnable onCallback;
                 ViewModelNoteForm.getInstance().setContent(editable.toString());
             }
         });
+
     }
 
     private void save() {
@@ -129,10 +146,21 @@ private final Runnable onCallback;
             return;
         }
 
-        if (ViewModelNoteForm.getInstance().addNote(getContext())){
-            onCallback.run();
-        }else{
-            AppUtils.showSnackBar(binding.formLayout,"No note added");
+        if (ViewModelNote.getInstance().updateFormData == null) {
+            // güncelle
+            if (ViewModelNoteForm.getInstance().updateNote(getContext())) {
+                onCallback.run();
+            } else {
+                AppUtils.showSnackBar(binding.formLayout, "No note updated");
+            }
+
+        } else {
+            // ekle
+            if (ViewModelNoteForm.getInstance().addNote(getContext())) {
+                onCallback.run();
+            } else {
+                AppUtils.showSnackBar(binding.formLayout, "No note added");
+            }
         }
     }
 

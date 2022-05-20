@@ -70,4 +70,14 @@ public class ViewModelNoteForm extends ViewModel {
 
     }
 
+    public boolean updateNote(Context context) {
+        try {
+            AppDatabase.getInstance(context).daoNote().update(modelNote);
+            return true;
+        } catch (Exception exception) {
+            Log.e("updateNote", exception.toString());
+            return false;
+        }
+    }
+
 }

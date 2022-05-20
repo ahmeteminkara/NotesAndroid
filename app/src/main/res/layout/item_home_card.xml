@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="#ccc"
+    app:cardBackgroundColor="@color/defaultNoteColor"
     app:cardCornerRadius="10dp"
     app:cardElevation="2dp">
 
@@ -61,11 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="end"
-            android:paddingEnd="4dp"
             android:text="07 April 2022 01:00"
             android:textColor="#5B000000"
-            android:textSize="11sp"
-            android:textStyle="italic" />
+            android:textSize="11sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

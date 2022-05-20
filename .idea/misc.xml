@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/ic_color_palette.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/ic_deselect.xml" value="0.2545" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2705" />
         <entry key="app/src/main/res/drawable/ic_select_all.xml" value="0.2545" />
         <entry key="app/src/main/res/layout/activity_add_note.xml" value="0.18729451497395833" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23252653464292866" />
@@ -19,6 +20,7 @@
         <entry key="app/src/main/res/layout/view_color_palette.xml" value="0.44910227457682295" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/menu/select_menu.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2705" />
       </map>
     </option>
   </component>

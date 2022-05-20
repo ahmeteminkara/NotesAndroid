@@ -69,7 +69,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
             onTouchListener.onLongTouch(noteList.get(position));
             return true;
         });
-        holder.cardItem.setOnClickListener(view -> onTouchListener.onTouch(noteList.get(position)));
+        holder.cardItem.setOnClickListener(view -> onTouchListener.onTouch(holder.cardItem,noteList.get(position)));
     }
 
     @Override
@@ -110,7 +110,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     }
 
     public interface OnTouchListener {
-        void onTouch(ModelNote note);
+        void onTouch(View view,ModelNote note);
 
         void onLongTouch(ModelNote note);
     }

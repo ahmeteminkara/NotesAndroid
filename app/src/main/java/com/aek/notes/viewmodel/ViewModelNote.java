@@ -16,6 +16,7 @@ import java.util.Map;
 public class ViewModelNote extends ViewModel {
 
     private static ViewModelNote instance;
+    public ModelNote updateFormData = null;
 
     public static ViewModelNote getInstance() {
         if (instance == null) instance = new ViewModelNote();

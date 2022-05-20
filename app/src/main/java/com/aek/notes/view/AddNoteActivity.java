@@ -18,6 +18,7 @@ import com.aek.notes.R;
 import com.aek.notes.core.constants.AppConstants;
 import com.aek.notes.databinding.ActivityAddNoteBinding;
 import com.aek.notes.view.fragment.NewNoteFormFragment;
+import com.aek.notes.viewmodel.ViewModelNote;
 import com.aek.notes.viewmodel.ViewModelNoteForm;
 import com.google.android.material.transition.platform.MaterialArcMotion;
 import com.google.android.material.transition.platform.MaterialContainerTransform;
@@ -117,6 +118,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        ViewModelNote.getInstance().updateFormData = null;
         boolean status = ViewModelNoteForm.getInstance().getColorPaletteStatus();
         if (status) {
             ViewModelNoteForm.getInstance().liveDataColorPaletteStatus.setValue(false);
