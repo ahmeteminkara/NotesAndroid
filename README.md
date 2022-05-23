@@ -16,4 +16,3 @@
 - [X] Ana sayfa ekranı
 - [ ] UI geliştirme
 - [ ] Play'a Yükleme
-- [ ] Widget oluşturma
