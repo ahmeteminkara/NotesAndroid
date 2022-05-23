@@ -14,5 +14,5 @@
 - [x] Kaydetme ekranı
 - [X] Verileri Room'da saklama
 - [X] Ana sayfa ekranı
-- [ ] UI geliştirme
+- [X] UI geliştirme
 - [ ] Play'a Yükleme
